@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charaset="UTF-8">
+<meta name="viewport" contents="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<title>サインイン</title>
+</head>
+<body>
+    <div class="d-flex align-items-center justify-content-center" style="height: 80vh;">
+        <div class="card" style="width: 24rem;">
+            <div class="card-body">
+                <h5 class="card-title">ログイン</h5>
+                <hr />
+                <form method="post" autocomplete="off" th:action="@{/signin}">
+                    <div class="form-group">
+                        <lable for="email">E-Mail</lable>
+                        <input type="email" class="form-control" id="email" name="email" tabindex="1" required />
+                    </div>
+                    <div class="form-group">
+                        <lable for="password">Password</lable>
+                        <input type="password" class="form-control" id="password" name="password" tabindex="2" required />
+                    </div>
+                    
+                    <div class="my-1 text-danger" th:if="${authenticationException}">
+                    	<span th:text="${authenticationException.message}"></span>
+                    </div>
+                    
+                    <hr />
+                    <button type="submit" class="btn btn-primary btn-block">サインイン</button>
+                    <a th:href="@{/registration}" class="btn btn-danger btn-block text-light">ユーザー登録</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+</body>
+</html>

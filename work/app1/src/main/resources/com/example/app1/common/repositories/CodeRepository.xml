@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTO Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.example.app1.common.repositories.CodeRepository">
+
+    <select id="getDeptCd" resultType="com.example.app1.common.Option">
+    <![CDATA[
+        SELECT 
+               DP.DEPT_CD    AS code,
+               DP.DEPT_NM    AS name
+        FROM   DEPTS DP
+    ]]>
+    </select>
+    
+    <select id="getPosCd" resultType="com.example.app1.common.Option">
+    <![CDATA[
+        SELECT 
+               PS.POS_CD    AS code,
+               PS.POS_NM    AS name
+        FROM   POSITIONS PS
+    ]]>
+    </select>
+
+</mapper>

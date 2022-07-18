@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charaset="UTF-8">
+    <meta name="viewport" contents="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <meta th:replace="fragments/scripts :: scripts">
+    <title>ユーザー情報一覧</title>
+</head>
+<body>
+    <div class="header"></div>
+    
+    <div th:replace="fragments/sidenav :: sidenav"></div>
+    
+    <div th:replace="fragments/toast :: toast"></div>
+    
+    <div class="main">
+        <form th:action="@{/userSearch.do}" th:object="${userSearchForm}">
+            <div class="p-4">
+                <div>
+                    <h4 class="m-0 pb-2 mb-3 border-bottom">ユーザ―情報一覧</h4>
+                </div>
+                <!-- 検索条件 -->
+                <div class="d-flex align-items-end mb-2">
+                    <h5 class="m-0 mr-2">検索条件</h5>
+                    <a href="#" id="condition-toggler" data-bs-toggle="collapse" data-bs-target="#searchCondition">
+                        <span class="d-none">[表示]</span>
+                        <span>[隠す]</span>
+                    </a>
+                    <div class="ml-auto">
+                        <a th:href="@{/registration}" class="btn btn-primary btn-sm shadow-sm">
+                            <span>ユーザー新規登録</span>
+                        </a>
+                    </div>
+                </div>
+                <div id="searchCondition" class="collapse show">
+                    <div class="border p-3 rounded">
+                        <div class="d-flex align-items-top mb-2">
+                            <strong style="width: 10rem;">社員番号</strong>
+                            <input type="text" class="form-control form-control-sm" style="width: 10rem;"
+                                    th:field="*{empNo}" />
+                        </div>
+                        <div class="d-flex align-items-top mb-2">
+                            <strong style="width: 10rem;">氏名</strong>
+                            <input type="text" class="form-control form-control-sm" style="width: 16rem;"
+                                    th:field="*{name}" />
+                        </div>
+                        <div class="d-flex align-items-top mb-2">
+                            <strong style="width: 10rem;">所属部署</strong>
+                            <select class="form-select form-select-sm" style="width: 16rem;" th:field="*{deptCd}">
+                                <option value="">-- 選択してください</option>
+                                <option th:each="option : *{deptOptions}" th:value="${option.code}"
+                                        th:text="${option.name}"></option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-top mb-2">
+                            <strong style="width: 10rem;">役職</strong>
+                            <select class="form-select form-select-sm" style="width: 16rem;" th:field="*{posCd}">
+                                <option value="">-- 選択してください</option>
+                                <option th:each="option : *{posOptions}" th:value="${option.code}"
+                                        th:text="${option.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-2">
+                    <button class="btn btn-success btn-sm shadow-sm px-3">
+                        <span>検索実行</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- 検索結果 -->
+        <div class="table-fixed-header px-3">
+            <table class="table table-sm table-striped m-0 pb-3">
+                <col width="5%"/>
+                <col width="15%"/>
+                <col width="25%"/>
+                <col width="30%"/>
+                <col width="25%"/>
+                <thead>
+                    <tr>
+                        <th class="sticky-top bg-white text-truncate"></th>
+                        <th class="sticky-top bg-white text-truncate">社員番号</th>
+                        <th class="sticky-top bg-white text-truncate">氏名</th>
+                        <th class="sticky-top bg-white text-truncate">所属部署</th>
+                        <th class="sticky-top bg-white text-truncate">役職</th>
+                    </tr>
+                </thead>
+                <tbody th:if="${searchResult}">
+                    <tr th:each="user : ${searchResult.entities}">
+                        <td class="text-center">
+                            <a href="＃">
+                                <i class="bi bi-pen"></i>
+                            </a>
+                        </td>
+                        <td th:text="${user.empNo}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.deptName}"></td>
+                        <td th:text="${user.posName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="p-3" th:if="${searchResult}">
+            <ul class="pagination d-flex justify-content-center">
+                <li class="page-item" th:classappend="${searchResult.currentPage == 1 ? 'disabled' : ''}">
+                    <a th:href="|@{/userPageView.do}?p=${searchResult.currentPage - 1}|" class="page-link">前へ</a>
+                </li>
+                <li class="page-item">
+                    <a th:href="|@{/userPageView.do}?p=1|" class="page-link">1</a>
+                </li>
+                <li class="page-item mx-2" th:if="${searchResult.pageFrom != 2}">
+                    ...
+                </li>
+                <li class="page-item" th:each="index : ${#numbers.sequence(searchResult.pageFrom, searchResult.pageTo)}"
+                    th:if="${searchResult.totalPageCount > 2}">
+                    <a th:href="|@{/userPageView.do}?p=${index}|" class="page-link" th:text="${index}"></a>
+                </li>
+                <li class="page-item mx-2" th:if="${searchResult.totalPageCount - searchResult.pageTo > 1}">
+                    ...
+                </li>
+                <li class="page-item" th:if="${searchResult.totalPageCount > 1}">
+                    <a th:href="|@{/userPageView.do}?p=${searchResult.totalPageCount}|"
+                        class="page-link" th:text="${searchResult.totalPageCount}"></a>
+                </li>
+                <li class="page-item" th:classappend="${searchResult.currentPage == searchResult.totalPageCount ? 'disabled' : ''}">
+                    <a th:href="|@{/userPageView.do}?p=${searchResult.currentPage + 1}|"
+                        class="page-link">次へ</a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer pr-3">
+        </div>
+    </div>
+    
+    <script>
+        let btn = document.querySelector("#btn");
+        let sidebar = document.querySelector(".sidebar");
+        let header = document.querySelector(".header");
+        let main = document.querySelector(".main");
+        
+        btn.onclick = function() {
+            sidebar.classList.toggle("active");
+            header.classList.toggle("active");
+            main.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>

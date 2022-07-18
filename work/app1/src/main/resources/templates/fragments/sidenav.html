@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charaset="UTF-8">
+<meta name="viewport" contents="width=device-width, initial-scale=1">
+<title></title>
+</head>
+<body>
+    <div th:fragment="sidenav">
+        <div class="sidebar">
+            <div class="logo_content">
+                <div class="logo">
+                    <i class='bx bxs-cube-alt'></i>
+                    <div class="logo_name">CodingLab</div>
+                </div>
+                <i class="bx bx-menu" id="btn"></i>
+            </div>
+            <ul class="nav_list">
+                <li>
+                    <a th:href="@{/profile.html}">
+                        <i class='bx bxs-user'></i>
+                        <span class="links_name">User</span>
+                    </a>
+                    <span class="tooltip_item">User</span>
+                </li>
+                <li>
+                    <a th:href="@{/userSearch.html}">
+                        <i class='bx bx-group'></i>
+                        <span class="links_name">UserSearch</span>
+                    </a>
+                    <span class="tooltip_item">UserSearch</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-chat'></i>
+                        <span class="links_name">Message</span>
+                    </a>
+                    <span class="tooltip_item">Message</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-file' ></i>
+                        <span class="links_name">File</span>
+                    </a>
+                    <span class="tooltip_item">File</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-cog' ></i>
+                        <span class="links_name">Setting</span>
+                    </a>
+                    <span class="tooltip_item">Setting</span>
+                </li>
+            </ul>
+            <form th:action="@{/logout}" method="POST">
+                <button type="submit" class="btn btn-outline-success btn-lg btn-block">Ｌｏｇｏｕｔ</button>
+            </form>
+        </div>
+    </div>
+
+</body>

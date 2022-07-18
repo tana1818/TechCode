@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charaset="UTF-8">
+<meta name="viewport" contents="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<title>ユーザー登録フォーム</title>
+</head>
+<body>
+    <nav class="navber navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a href="login.html" class="navbar-brand">CodingLab</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h5>ユーザー登録フォーム</h5>
+        <hr />
+        <form method="post" autocomplete="off" th:action="@{/registration}" th:object="${userRegistrationForm}">
+            <div class="row">
+                <div class="col-xl-12 form-group">
+                    <label for="email">E-Mail</label>
+                    <input type="email" class="form-control" id="email" th:field="${userRegistrationForm.email}" />
+                    <div class="my-1 text-danger" th:if="${#fields.hasErrors('email')}">
+                    	<span th:errors="*{email}"></span>
+                    </div>
+                    <div class="my-1 text-danger" th:if="${emailDup}">
+                    	<span th:text="${emailDup}"></span>
+                    </div>
+                </div>
+                <div class="col-xl-12 form-group">
+                    <label for="emailConfirm">E-Mail（再入力）</label>
+                    <input type="email" class="form-control" id="emailConfirm" th:field="${userRegistrationForm.emailConfirm}" />
+                    <div class="my-1 text-danger" th:if="${#fields.hasErrors('emailConfirm')}">
+                    	<span th:errors="${userRegistrationForm.emailConfirm}"></span>
+                    </div>
+                    <div class="my-1 text-danger" th:if="${#fields.hasErrors('emailConfirmed')}">
+                    	<span th:errors="*{emailConfirmed}"></span>
+                    </div>
+                </div>
+                <div class="col-xl-12 form-group">
+                    <label for="username">ユーザー名</label>
+                    <input type="text" class="form-control" id="username" name="username" value=""/>
+                    <div class="my-1 text-danger" th:if="${#fields.hasErrors('username')}">
+                    	<span th:errors="*{username}"></span>
+                    </div>
+                </div>
+                <div class="col-xl-12 form-group">
+                    <label for="password">パスワード</label>
+                    <input type="password" class="form-control" id="password" th:field="*{password}" />
+                    <div class="my-1 text-danger" th:if="${#fields.hasErrors('password')}">
+                    	<span th:errors="*{password}"></span>
+                    </div>
+                </div>
+                <div class="col-xl-12 form-group">
+                    <label for="passwordConfirm">パスワード（再入力）</label>
+                    <input type="password" class="form-control" id="passwordConfirm" th:field="*{passwordConfirm}" />
+                    <div class="my-1 text-danger" th:if="${#fields.hasErrors('passwordConfirm')}">
+                    	<span th:errors="${userRegistrationForm.passwordConfirm}"></span>
+                    </div>
+                    <div class="my-1 text-danger" th:if="${#fields.hasErrors('passwordConfirmed')}">
+                    	<span th:errors="*{passwordConfirmed}"></span>
+                    </div>
+                </div>
+                <div class="col-xl-12 d-flex justify-content-end mt-4">
+                    <button class="btn btn-primary">ユーザー登録</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+</body>
+</html>
